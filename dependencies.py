@@ -80,7 +80,7 @@ def default_dependencies_check() -> None:
         [
             {
                 "name": "Motion-on",
-                "description": "Turns off motion"
+                "description": "Turns on motion"
             },
             {
                 "name": "Motion-off",
@@ -88,11 +88,11 @@ def default_dependencies_check() -> None:
             },
             {
                 "name": "Transparency-off",
-                "description": "Turns off motion"
+                "description": "Turns off transparency"
             },
             {
                 "name": "Transparency-on",
-                "description": "Turns off motion"
+                "description": "Turns on transparency"
             },
         ]
     )

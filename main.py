@@ -4,13 +4,15 @@ from default_scripts.planing_close import planing_close_func
 from default_scripts.close_all_apps import close_all_apps_func
 from default_scripts.work_mode import work_mode_func
 from default_scripts.game_mode import game_mode_func
+from dependencies import default_dependencies_check
 
 scripts = {
     "planing": planing_func,
     "planing_close": planing_close_func,
     "close_all_apps": close_all_apps_func,
     "work_mode": work_mode_func,
-    "game_mode": game_mode_func
+    "game_mode": game_mode_func,
+    "dependencies": default_dependencies_check,
 }
 
 def main() -> None:
@@ -24,7 +26,8 @@ def main() -> None:
     if script_name in scripts:
         scripts[script_name]()
     else:
-        print("Unknown script:", script_name)
+        if script_name != "list":
+            print("Unknown script:", script_name)
         print("Available scritps:", ", ".join(scripts.keys()))
 
 
