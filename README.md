@@ -33,7 +33,7 @@ This project is designed for:
 Curious how macpy feels in real workflows?  
 Watch a short demo showing mode switching, system changes, and app management:
 
-👉 **YouTube:** <link_here>
+👉 **YouTube:** https://www.youtube.com/watch?v=ycxZnJ-ns_E
 
 
 ## 📦 Requirements
