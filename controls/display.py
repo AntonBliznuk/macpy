@@ -4,6 +4,8 @@ import re
 
 class DisplayController:
 
+    KEY_PRES_TO_LOWEST_BRIGHTNESS = 16
+
     def __init__(self, display_id: str) -> None:
         self.display_id = display_id
         self.current_brightness = None
@@ -60,12 +62,6 @@ class DisplayController:
 
         return int(raw_result)
 
-    def _get_current_brightness(self) -> int:
-        """
-        Under development.
-        """
-        pass
-
     def change_resolution(self, width: int, height: int) -> dict:
         """
         ⚠️ Note:
@@ -112,15 +108,9 @@ class DisplayController:
                 "status": False,
                 "message": f"❌ Display refresh rate wasn't changed: {e}"
             }
-    @staticmethod
-    def change_brightness(self, brightness: int) -> None:
-        """
-        Under development.
-        """
-        pass
 
     @staticmethod
-    def brightness_up() -> None:
+    def _brightness_up() -> None:
         subprocess.run(
             [
                 "osascript",
@@ -130,7 +120,7 @@ class DisplayController:
         )
 
     @staticmethod
-    def brightness_down() -> None:
+    def _brightness_down() -> None:
         subprocess.run(
             [
                 "osascript",
@@ -139,12 +129,28 @@ class DisplayController:
             ]
         )
 
+    @staticmethod
+    def calibrate_brightness() -> None:
+        for _ in range(DisplayController.KEY_PRES_TO_LOWEST_BRIGHTNESS):
+            DisplayController._brightness_down()
+
+    @staticmethod
+    def set_brightness(brightness: int, to_calibrate: bool=True) -> None:
+        if to_calibrate:
+            DisplayController.calibrate_brightness()
+        for _ in range(
+            round((16 / 100) * brightness)
+        ):
+            DisplayController._brightness_up()
+
+        return {
+            "status": True,
+            "message": f"✅ Display brightness was set to {brightness}%"
+        }
+
 if __name__ == "__main__":
     my_display = DisplayController(
         "37D8832A-2D66-02CA-B9F7-8F30A301B230"
     )
-    print(my_display.current_resolution)
-    print(my_display.current_refresh_rate)
-    # print(my_display.change_resolution(1496,967))
-    print(my_display.change_refresh_rate(40))
+    my_display.set_brightness(60, True)
 
