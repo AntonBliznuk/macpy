@@ -23,10 +23,10 @@ def low_battery_mode_func() -> None:
 
 
     print(
-        display_conroller.change_refresh_rate(47)["message"]
+        display_conroller.set_refresh_rate(47)["message"]
     )
     print(
-        display_conroller.change_resolution(1168, 755)["message"]
+        display_conroller.set_resolution(1168, 755)["message"]
     )
     print(
         display_conroller.set_brightness(10, False)["message"]

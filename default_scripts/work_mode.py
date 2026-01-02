@@ -30,10 +30,10 @@ def work_mode_func() -> None:
 
     display_conroller = DisplayController("37D8832A-2D66-02CA-B9F7-8F30A301B230")
     print(
-        display_conroller.change_refresh_rate(120)["message"]
+        display_conroller.set_refresh_rate(120)["message"]
     )
     print(
-        display_conroller.change_resolution(1728, 1117)["message"]
+        display_conroller.set_resolution(1728, 1117)["message"]
     )
     print(
         display_conroller.set_brightness(60, False)["message"]

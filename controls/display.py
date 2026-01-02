@@ -8,7 +8,6 @@ class DisplayController:
 
     def __init__(self, display_id: str) -> None:
         self.display_id = display_id
-        self.current_brightness = None
 
     @property
     def current_resolution(self) -> tuple[int, int]:
@@ -62,12 +61,13 @@ class DisplayController:
 
         return int(raw_result)
 
-    def change_resolution(self, width: int, height: int) -> dict:
+    def set_resolution(self, width: int, height: int) -> dict:
         """
-        ⚠️ Note:
+        Note:
         Not every resolution value will work on every machine.
         You must run `displayplacer list` in Terminal to see which resolutions
         and scaling modes are available for your display before using this method.
+        You also can see available resolutions in settings of your mac in display section.
         """
         cmd = f'displayplacer "id:{self.display_id} res:{width}x{height} hz:{self.current_refresh_rate} scaling:on"'
         try:
@@ -85,9 +85,9 @@ class DisplayController:
                 "message": f"❌ Display resolution wasn't changed: {e}"
             }
 
-    def change_refresh_rate(self, refresh_rate: int) -> dict:
+    def set_refresh_rate(self, refresh_rate: int) -> dict:
         """
-        ⚠️ Note:
+        Note:
         Not all refresh rate values will work on every monitor.
         Run `displayplacer list` in Terminal to view all valid refresh rate options
         for your specific display before using this method.

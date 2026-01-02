@@ -28,10 +28,10 @@ def game_mode_func() -> None:
     system_controller.airdrop("Off")
 
     print(
-        display_conroller.change_refresh_rate(120)["message"]
+        display_conroller.set_refresh_rate(120)["message"]
     )
     print(
-        display_conroller.change_resolution(1168, 755)["message"]
+        display_conroller.set_resolution(1168, 755)["message"]
     )
     print(
         display_conroller.set_brightness(70, False)["message"]
