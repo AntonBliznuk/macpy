@@ -170,4 +170,42 @@ class SystemController:
             }
 
 
+    @staticmethod
+    def execute_cli_command(
+            command: str,
+            name: str="custom_command",
+            check: bool=True
+    ) -> None:
+        try:
+            subprocess.run(
+                [command],
+                check=True if check else False,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+            return {
+                "status": True,
+                "message": f"✅ {name} cli-command was executed"
+            }
+        except subprocess.CalledProcessError as e:
+            return {
+                "status": False,
+                "message": f"❌ {name} cli-command wasn't executed {e}%"
+            }
+
+    @staticmethod
+    def execute_apple_shortcuts(name_list: list[str]) -> None:
+        for name in name_list:
+            subprocess.run(
+                ["shortcuts", "run", name],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+            return {
+                "status": True,
+                "message": f"✅ {name} Apple Shortcut was executed"
+            }
+
+
 
