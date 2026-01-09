@@ -1,7 +1,7 @@
-from default_scripts.close_all_apps import close_all_apps_func
-from controls.system import SystemController
-from controls.custom import cloudflare_warp_connection
-from controls.display import DisplayController
+from legacy.default_scripts.close_all_apps import close_all_apps_func
+from legacy.controls.system import SystemController
+from legacy.controls.custom import cloudflare_warp_connection
+from legacy.controls.display import DisplayController
 
 
 def low_battery_mode_func() -> None:

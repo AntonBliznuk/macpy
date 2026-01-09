@@ -1,8 +1,3 @@
-from controls.app import AppController
-from default_scripts.close_all_apps import close_all_apps_func
-from controls.system import SystemController
-from controls.display import DisplayController
-
 from rich.progress import (
     Progress,
     SpinnerColumn,
@@ -14,10 +9,15 @@ from rich.progress import (
 from rich.console import Console
 from rich.panel import Panel
 
+from legacy.controls.app import AppController
+from legacy.default_scripts.close_all_apps import close_all_apps_func
+from legacy.controls.system import SystemController
+from legacy.controls.display import DisplayController
+
 console = Console()
 
 
-def game_mode_func() -> None:
+def work_mode_func() -> None:
     display_controller = DisplayController(
         "37D8832A-2D66-02CA-B9F7-8F30A301B230"
     )
@@ -28,24 +28,27 @@ def game_mode_func() -> None:
         ("[bold cyan]Calibrating brightness[/bold cyan]",
          lambda: display_controller.calibrate_brightness()),
 
-        ("Closing all apps",
+        ("Closing all applications",
          close_all_apps_func),
 
-        ("Opening applications",
-         lambda: app_controller.open_applications(["Steam", "Discord"])),
+        ("Opening work applications",
+         lambda: app_controller.open_applications([
+             "Google Chrome",
+             "ChatGPT",
+         ])),
 
         ("Setting system volume",
-         lambda: system_controller.set_volume(60)),
+         lambda: system_controller.set_volume(50)),
 
         ("Setting wallpaper",
-         lambda: system_controller.set_wallpaper("black.png")),
+         lambda: system_controller.set_wallpaper("default.jpg")),
 
         ("Configuring system toggles",
          lambda: (
              system_controller.wi_fi(),
              system_controller.bluetooth(),
-             system_controller.reduce_transparency(True),
-             system_controller.reduce_motion(True),
+             system_controller.reduce_transparency(False),
+             system_controller.reduce_motion(False),
              system_controller.low_power_mode(False),
          )),
 
@@ -53,16 +56,16 @@ def game_mode_func() -> None:
          lambda: display_controller.set_refresh_rate(120)),
 
         ("Setting resolution",
-         lambda: display_controller.set_resolution(1168, 755)),
+         lambda: display_controller.set_resolution(1728, 1117)),
 
         ("Focusing terminal",
          lambda: app_controller.focus_application("Ghostty")),
 
         ("Final brightness adjustment",
-         lambda: display_controller.set_brightness(70, False)),
+         lambda: display_controller.set_brightness(60, False)),
     ]
 
-    console.print("\n🎮 [bold]Enabling Game Mode[/bold]\n")
+    console.print("\n💼 [bold]Enabling Work Mode[/bold]\n")
 
     with Progress(
         SpinnerColumn(style="bold green"),
@@ -77,7 +80,7 @@ def game_mode_func() -> None:
         for name, step in steps:
             progress.update(task, description=name)
             try:
-                result = step()
+                step()
                 progress.advance(task)
                 console.print(f"  [green]✔[/green] {name}")
             except Exception as e:
@@ -85,7 +88,7 @@ def game_mode_func() -> None:
                 console.print(
                     Panel.fit(
                         str(e),
-                        title="[red]Game mode failed[/red]",
+                        title="[red]Work mode failed[/red]",
                         border_style="red",
                     )
                 )
@@ -93,8 +96,12 @@ def game_mode_func() -> None:
 
     console.print(
         Panel.fit(
-            "[bold green]Game mode is ready. Have fun 🎮[/bold green]",
+            "[bold green]Work mode is ready 🚀[/bold green]",
             title="macpy",
             border_style="green",
         )
     )
+
+
+if __name__ == "__main__":
+    work_mode_func()

@@ -1,4 +1,4 @@
-from controls.app import AppController
+from legacy.controls.app import AppController
 
 
 def planing_close_func() -> None:
