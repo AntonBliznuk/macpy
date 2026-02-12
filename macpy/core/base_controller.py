@@ -17,7 +17,7 @@ class BaseController:
 
     @staticmethod
     def _execute(
-            command: list[str],
+            command: list[str] | str,
             success_message: bool=None,
             error_message: bool=None,
             raise_on_error: bool=None,

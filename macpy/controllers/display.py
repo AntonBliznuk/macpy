@@ -10,8 +10,6 @@ class DisplayController(BaseController):
 
         self.display_id: str = display_id
         self.brightness_state: int|None = None
-        self.current_width: int|None = None
-        self.current_height: int|None = None
 
     @property
     def current_refresh_rate(self) -> int:
@@ -75,7 +73,14 @@ class DisplayController(BaseController):
                 "-e",
                 'tell application "System Events" to key code 145'
             ],
-            raise_on_error = True
+            raise_on_error = True,
+        )
+
+    def set_resolution(self, width: int, height: int) -> CommandResult:
+        return self._execute(
+            f'displayplacer "id:{self.display_id} res:{width}x{height} hz:{self.current_refresh_rate} scaling:on"',
+            raise_on_error=True,
+            shell=True,
         )
 
     def calibrate_brightness(self) -> CommandResult:
@@ -108,10 +113,3 @@ class DisplayController(BaseController):
             success=True,
             message=f"Brightness set to {brightness}."
         )
-
-    def set_resolution (self, width: int, height: int) -> CommandResult:
-        return self._execute(
-            [f'displayplacer "id:{self.display_id} res:{width}x{height} hz:{self.current_refresh_rate} scaling:on"'],
-            raise_on_error=True
-        )
-
