@@ -21,14 +21,17 @@ class BaseController:
             success_message: bool=None,
             error_message: bool=None,
             raise_on_error: bool=None,
+            capture_output: bool=None,
             **kwargs
     ) -> CommandResult:
         try:
-            subprocess.run(
+            result = subprocess.run(
                 command,
                 check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
+                stdout=subprocess.DEVNULL if not capture_output else None,
+                stderr=subprocess.DEVNULL if not capture_output else None,
+                capture_output=capture_output if capture_output else False,
+                **kwargs,
             )
 
             if kwargs.get("restart_dock"):
@@ -37,6 +40,7 @@ class BaseController:
             return CommandResult(
                 success=True,
                 message=success_message if success_message else f"success -> {command}",
+                output=result,
             )
 
         except subprocess.CalledProcessError as e:
